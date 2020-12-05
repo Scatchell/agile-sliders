@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content">
+    <section class="section">
+        {% for slider in sliders %}
+        <div class="columns slider">
+            <div class="column">
+                <label for="slider-{{ slider.name }}">{{ slider.name }}</label>
+                <input id="slider-{{ slider.name }}" class="slider has-output is-fullwidth is-large" min="0" max="100"
+                       value="{{ slider.initial-pos }}" step="{{ slider.step }}" type="range">
+                <output for="slider-{{ slider.name }}">{{ slider.initial-pos }}</output>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}
+
+{% block page-scripts %}
+{% script "/js/sliders.js" %}
+{% endblock %}

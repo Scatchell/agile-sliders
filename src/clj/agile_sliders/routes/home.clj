@@ -1,13 +1,17 @@
 (ns agile-sliders.routes.home
   (:require
-   [agile-sliders.layout :as layout]
-   [clojure.java.io :as io]
-   [agile-sliders.middleware :as middleware]
-   [ring.util.response]
-   [ring.util.http-response :as response]))
+    [agile-sliders.layout :as layout]
+    [clojure.java.io :as io]
+    [agile-sliders.middleware :as middleware]
+    [ring.util.response]
+    [ring.util.http-response :as response]
+    [agile-sliders.domain.sliders :refer [sliders-data]]))
 
-(defn home-page [request]
-  (layout/render request "home.html" {:docs (-> "docs/docs.md" io/resource slurp)}))
+(defn sliders-page [request]
+  (layout/render request "sliders.html" {:sliders
+                                         (sliders-data 2
+                                                       {:step        1
+                                                        :initial-pos 50})}))
 
 (defn about-page [request]
   (layout/render request "about.html"))
@@ -16,6 +20,6 @@
   [""
    {:middleware [middleware/wrap-csrf
                  middleware/wrap-formats]}
-   ["/" {:get home-page}]
+   ["/" {:get sliders-page}]
    ["/about" {:get about-page}]])
 
