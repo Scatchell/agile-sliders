@@ -1,0 +1,9 @@
+fileignoreconfig:
+- filename: env/dev/clj/agile_sliders/env.clj
+  checksum: 9130b503d584c15431051684e4ccc29f3014a449196a5ee3cc73861886288786
+- filename: env/prod/clj/agile_sliders/env.clj
+  checksum: 2fbdf515c4a17949e24226ebcc884d215875f609e96914fe90b1ffe6eea42375
+- filename: package-lock.json
+  checksum: 7c338e27a3dd7c7c6eb426f83eea647d6bb8120347ec5133c936f1bf03b6868e
+- filename: src/clj/agile_sliders/core.clj
+  checksum: 673c399bc6cc04fbacb2179575464e051075947f40c4abfe7787e3967fe1bc32
