@@ -9,7 +9,7 @@
                  [com.fasterxml.jackson.core/jackson-core "2.11.3"]
                  [com.fasterxml.jackson.core/jackson-databind "2.11.3"]
                  [com.google.guava/guava "27.0.1-jre"]
-                 [com.novemberain/monger "3.1.0" :exclusions [com.google.guava/guava]]
+                 [com.novemberain/monger "3.5.0" :exclusions [com.google.guava/guava]]
                  [cprop "0.1.17"]
                  [expound "0.8.6"]
                  [funcool/struct "1.4.0"]
