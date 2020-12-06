@@ -149,9 +149,9 @@ describe('Sliders', () => {
             let $slider1SuggestedPos = $slider1.parent().find('.suggested-position');
             let $slider2SuggestedPos = $slider2.parent().find('.suggested-position');
             let $slider3SuggestedPos = $slider3.parent().find('.suggested-position');
-            expect($slider1SuggestedPos).not.toContainText('1');
-            expect($slider2SuggestedPos).not.toContainText('1');
-            expect($slider3SuggestedPos).not.toContainText('1');
+            expect($slider1SuggestedPos).not.toContainText('Lower 1');
+            expect($slider2SuggestedPos).not.toContainText('Lower 1');
+            expect($slider3SuggestedPos).not.toContainText('Lower 1');
         });
     });
 });

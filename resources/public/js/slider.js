@@ -1,6 +1,7 @@
 class Slider {
     constructor($slider) {
         this.$slider = $slider;
+        this.stepValue = parseInt($slider.attr("step"));
         this.$suggestedSliderVal = $slider.parent().find('.suggested-position');
     }
 
@@ -25,7 +26,7 @@ class Slider {
             actionHelper = 'Lower';
         }
 
-        this.$suggestedSliderVal.text(actionHelper + ' ' + Math.abs((suggestedVal / 10)));
+        this.$suggestedSliderVal.text(actionHelper + ' ' + Math.abs(suggestedVal / this.stepValue));
     }
 
 }
