@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content">
+    <div class="columns">
+        <div class="column">
+        </div>
+        <div class="column is-half">
+            <div id="errors" class="notification is-danger" style="display: none;">
+            </div>
+        </div>
+        <div class="column">
+        </div>
+    </div>
+
+    <form id="session-form">
+        {% csrf-field %}
+        <div id="session-data">
+            <div class="columns">
+                <div class="column">
+                </div>
+                <div class="column is-half">
+                    <div class="control">
+                        <label class="label">Session Name</label>
+                        <input id="session-name" class="input" type="text" placeholder="Enter the name of this sliders session">
+                    </div>
+                </div>
+                <div class="column">
+                </div>
+            </div>
+            <div class="columns item-columns">
+                <div class="column">
+                </div>
+                <div class="column is-half item-column">
+                    <div class="field">
+                        <label class="label">Slider Name</label>
+                        <div class="control">
+                            <input class="session-slider-title input" type="text" placeholder="Enter slider name">
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                </div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column">
+            </div>
+
+            <div class="column is-half">
+                <div class="field is-grouped" style="margin-top: 20px;">
+                    <div class="columns">
+                        <div class="column">
+                            <div class="control">
+                                <button class="button is-success is-rounded" id="submit" type="submit">Submit Session
+                                </button>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="control">
+                                <button class="button is-primary is-light" id="add-new-slider">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block page-styles %}
+{% endblock %}
+
+{% block page-scripts %}
+{% script "/js/create-session-page.js" %}
+{% endblock %}

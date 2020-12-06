@@ -33,7 +33,8 @@
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.8.2"]
                  [ring/ring-defaults "0.3.2"]
-                 [selmer "1.12.31"]]
+                 [selmer "1.12.31"]
+                 [nano-id "1.0.0"]]
 
   :min-lein-version "2.0.0"
   

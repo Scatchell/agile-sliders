@@ -13,14 +13,14 @@
 (defstate db
   :start (:db db*))
 
-(defn create-user [user]
-  (mc/insert db "users" user))
+(defn create-session [session]
+  (mc/insert db "sessions" session))
 
-(defn update-user [id first-name last-name email]
-  (mc/update db "users" {:_id id}
+(defn update-session [id first-name last-name email]
+  (mc/update db "sessions" {:_id id}
              {$set {:first_name first-name
                     :last_name last-name
                     :email email}}))
 
-(defn get-user [id]
-  (mc/find-one-as-map db "users" {:_id id}))
+(defn get-session [session-id]
+  (mc/find-one-as-map db "sessions" {:session-id session-id}))
