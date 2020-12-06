@@ -9,8 +9,8 @@
 
 (defn sliders-page [request]
   (layout/render request "sliders.html" {:sliders
-                                         (sliders-data 2
-                                                       {:step        1
+                                         (sliders-data 3
+                                                       {:step        10
                                                         :initial-pos 50})}))
 
 (defn about-page [request]

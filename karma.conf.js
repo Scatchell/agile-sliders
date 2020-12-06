@@ -8,9 +8,10 @@ module.exports = function(config) {
     basePath: '',
 
 
+      plugins: ['@metahub/karma-jasmine-jquery', 'karma-*'],
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-jquery'],
 
 
     // list of files / patterns to load in the browser
@@ -22,6 +23,7 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
+        'resources/public/js/**/*-page.js'
     ],
 
 
@@ -56,7 +58,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+   browsers: ['Chrome'],
 
 
     // Continuous Integration mode
