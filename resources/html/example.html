@@ -4,9 +4,11 @@
     <section class="section">
         <h2>{{ name }}</h2>
         {% for slider in sliders %}
-        <div class="columns slider">
-            <div class="column">
+        <div class="columns slider is-vcentered">
+            <div class="column is-one-fifth">
                 <label for="slider-{{ slider.name }}">{{ slider.name }}</label>
+            </div>
+            <div class="column">
                 <input id="slider-{{ slider.name }}" class="slider has-output is-fullwidth is-large" min="0" max="100"
                        value="{{ slider.initial-pos }}" step="{{ slider.step }}" type="range">
                 <output id="current-position" for="slider-{{ slider.name }}">{{ slider.initial-pos }}</output>

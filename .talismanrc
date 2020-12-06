@@ -14,4 +14,4 @@ fileignoreconfig:
 - filename: resources/public/vendor/js/jquery-3.5.1.min.js
   checksum: cf63908a22e2a75f5731070cb682e891b2e7b882148c4db26b6c87eb79d89a8c
 - filename: src/clj/agile_sliders/domain/sliders.clj
-  checksum: 4ba0e915941bc098aba3a2f8d2bd6e6b1e011c29ed80ad9263dd76d2899e1ade
+  checksum: 4e8fc7e3b5a0cd17084184dc38b7cec1a13b15ae876fb078b864d1e012ff4e9d

@@ -1,6 +1,6 @@
 (ns agile-sliders.domain.sliders-test
   (:require [clojure.test :refer :all])
-  (:require [agile-sliders.domain.sliders :refer [sliders-data]]))
+  (:require [agile-sliders.domain.sliders :refer [sliders-data sliders-mock-data]]))
 
 (deftest sliders-data-test
   (is (= {:name    "session 1"
@@ -19,3 +19,4 @@
                                      {:name "slider 2", :initial_pos 50, :step 1}
                                      ]})))
   )
+

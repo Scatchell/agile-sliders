@@ -12,10 +12,7 @@
     ))
 
 (defn example-page [request]
-  (layout/render request "sliders.html" {:sliders
-                                         (sliders-mock-data 3
-                                                            {:step        10
-                                                             :initial-pos 50})}))
+  (layout/render request "example.html" (sliders-mock-data)))
 
 (defn get-session [request]
   (let [session-id (get-in request [:path-params :session-id])]

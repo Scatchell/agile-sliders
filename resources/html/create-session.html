@@ -1,14 +1,18 @@
 {% extends "base.html" %}
+{% block page-styles %}
+{% style "/css/create-session.css" %}
+{% endblock %}
 {% block content %}
 <div class="content">
     <div class="columns">
-        <div class="column">
-        </div>
-        <div class="column is-half">
+        <div class="column is-half is-offset-one-quarter">
             <div id="errors" class="notification is-danger" style="display: none;">
             </div>
         </div>
-        <div class="column">
+    </div>
+    <div class="columns is-vcentered">
+        <div class="column is-half is-offset-one-quarter">
+            <h1>Create a new "sliders" session</h1>
         </div>
     </div>
 
@@ -16,15 +20,13 @@
         {% csrf-field %}
         <div id="session-data">
             <div class="columns">
-                <div class="column">
-                </div>
-                <div class="column is-half">
+                <div class="column is-half is-offset-one-quarter">
                     <div class="control">
                         <label class="label">Session Name</label>
-                        <input id="session-name" class="input" type="text" placeholder="Enter the name of this sliders session">
+                        <input id="session-name" class="input" type="text"
+                               placeholder="Enter the name of this sliders session">
+                        <p class="help">Name your session something the describes what all of the sliders are trying to prioritize</p>
                     </div>
-                </div>
-                <div class="column">
                 </div>
             </div>
             <div class="columns item-columns">
@@ -36,6 +38,7 @@
                         <div class="control">
                             <input class="session-slider-title input" type="text" placeholder="Enter slider name">
                         </div>
+                        <p class="help">Name each slider with the item you wish to prioritize (e.g. budget, scope, handover, etc.)</p>
                     </div>
                 </div>
                 <div class="column">
