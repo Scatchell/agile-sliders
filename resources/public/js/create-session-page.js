@@ -3,7 +3,7 @@ const toItems = (arr1) => arr1.reduce((sliderList, sliderName) => {
         name: sliderName,
         step: 10,
         initial_pos: 50
-})
+    })
     return sliderList;
 }, []);
 
@@ -16,10 +16,18 @@ function prepareSessionData() {
     };
 }
 
+
 $(document).ready(function () {
     let $itemColumnsClone = $(".item-columns").clone();
 
-    $("#add-new-slider").click(function (e) {
+    let createNewItemOnKey = function (e) {
+        if ((e.ctrlKey && e.which === 13) || e.metaKey && e.which === 13) {
+            createNewSlider($itemColumnsClone);
+            e.preventDefault();
+        }
+    };
+
+    function createNewSlider($itemColumnsClone) {
         let $textAreas = $('.item-columns textarea');
         let $textInputs = $(`.item-columns input`);
 
@@ -27,6 +35,16 @@ $(document).ready(function () {
         $textAreas.prop("readonly", true).addClass("is-warning");
 
         $itemColumnsClone.clone().appendTo("#session-data");
+
+        let $newItem = $('input.session-slider-title').last();
+
+        $newItem.keydown(createNewItemOnKey);
+        $newItem.focus();
+    }
+
+
+    $("#add-new-slider").click(function (e) {
+        createNewSlider($itemColumnsClone);
         e.preventDefault();
     });
 
@@ -50,4 +68,6 @@ $(document).ready(function () {
 
         e.preventDefault();
     });
+
+    $('input.session-slider-title').keydown(createNewItemOnKey);
 });

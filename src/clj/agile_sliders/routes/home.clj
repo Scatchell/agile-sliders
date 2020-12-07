@@ -12,7 +12,7 @@
     ))
 
 (defn example-page [request]
-  (layout/render request "example.html" (sliders-mock-data)))
+  (layout/render request "sliders.html" (assoc (sliders-mock-data) :example-page true)))
 
 (defn get-session [request]
   (let [session-id (get-in request [:path-params :session-id])]

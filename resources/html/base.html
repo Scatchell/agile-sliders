@@ -29,7 +29,7 @@
         <div id="nav-menu" class="navbar-menu">
             <div class="navbar-start">
                 <a href="/create" class="navbar-item{% ifequal page "create-session.html" %} is-active{%endifequal%}">Create Sliders Session</a>
-                <a href="/example" class="navbar-item{% ifequal page "example.html" %} is-active{%endifequal%}">Example Sliders</a>
+                <a href="/example" class="navbar-item{% if example-page %} is-active{%endif%}">Example Sliders</a>
                 <a href="/about" class="navbar-item{% ifequal page "about.html" %} is-active{%endifequal%}">About</a>
             </div>
         </div>

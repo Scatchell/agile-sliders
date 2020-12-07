@@ -15,3 +15,5 @@ fileignoreconfig:
   checksum: cf63908a22e2a75f5731070cb682e891b2e7b882148c4db26b6c87eb79d89a8c
 - filename: src/clj/agile_sliders/domain/sliders.clj
   checksum: 4e8fc7e3b5a0cd17084184dc38b7cec1a13b15ae876fb078b864d1e012ff4e9d
+- filename: resources/public/js/create-session-page.js
+  checksum: e5b31aeb7c3e514bff6926ec9526a72f545460f205d52e7ea78ac9df61cfbe05
