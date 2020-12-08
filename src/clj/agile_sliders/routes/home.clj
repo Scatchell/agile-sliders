@@ -9,7 +9,7 @@
     [agile-sliders.db.core :as db]
     [struct.core :as st]
     [nano-id.core :refer [nano-id]]
-    ))
+    [clojure.set :as set]))
 
 (defn example-page [request]
   (layout/render request "sliders.html" (assoc (sliders-mock-data) :example-page true)))
@@ -52,10 +52,15 @@
         (response/ok {:session-id session-id})))))
 
 (defn save-new-session-version! [request]
-  (let [session-version-data (get-in request [:body-params])
+  (let [session-version-data (set/rename-keys
+                               (get-in request [:body-params])
+                               {:version_name :version-name})
         session-id (get-in request [:path-params :session-id])]
-    (db/create-session-version (merge {:version-name "blah"} session-version-data) session-id)
-    (response/ok {:session-id session-id})))
+    (db/create-session-version
+      session-version-data
+      session-id)
+    (response/ok {:session-id session-id
+                  :version-name (:version-name session-version-data)})))
 
 (defn forward-to-create-session-page [request]
   (response/temporary-redirect "/create"))
@@ -75,6 +80,7 @@
    ["/create" {:get create-session-page}]
    ["/session/:session-id" {:get get-session}]
    ["/session/:session-id/version" {:post save-new-session-version!}]
-   ["/session/:session-id/version/:version-name" {:get get-session-version}]
+   ["/session/:session-id/version/:version-name" {:post save-new-session-version!
+                                                  :get get-session-version}]
    ["/session" {:post save-session-data!}]
    ["/about" {:get about-page}]])
