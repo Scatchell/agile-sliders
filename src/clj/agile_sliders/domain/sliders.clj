@@ -8,7 +8,7 @@
              (map #(set/rename-keys % {:initial_pos :initial-pos}))
              (assoc session-data :sliders))]
 
-    (select-keys new-session-data [:name :sliders])))
+    (dissoc new-session-data :session-id)))
 
 (defn- matching-slider-position [slider-name sliders]
   (:current_pos (first (filter
@@ -30,7 +30,8 @@
                                       (matching-slider-position
                                         (:name session-slider)
                                         selected-version-sliders))))
-         (assoc session-data-without-versions :sliders))))
+         (assoc session-data-without-versions :sliders)
+         (#(assoc % :version-name version-name)))))
 
 (defn sliders-mock-data []
   {:name    "Example of a sliders prioritization session"

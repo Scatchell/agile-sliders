@@ -22,6 +22,7 @@
 
 (deftest sliders-data-version-test
   (is (= {:name    "session 1"
+          :version-name "Bob Jones"
           :sliders [{:name        "slider 1"
                      :step        1
                      :initial_pos 20
