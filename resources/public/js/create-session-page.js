@@ -16,7 +16,6 @@ function prepareSessionData() {
     };
 }
 
-
 $(document).ready(function () {
     let $itemColumnsClone = $(".item-columns").clone();
 
@@ -49,7 +48,6 @@ $(document).ready(function () {
     });
 
     $("#session-form").submit(function (e) {
-        console.log(JSON.stringify(prepareSessionData()));
         $.post({
             url: "/session",
             data: JSON.stringify(prepareSessionData()),
@@ -57,7 +55,6 @@ $(document).ready(function () {
         }).done(function (data) {
             window.location.href = "/session/" + data['session-id'];
         }).fail(function (data) {
-            console.log(data);
             let $errors = $('#errors');
             $errors.show();
             $errors.html("<h3>Validation errors:</h3><ol></ol>");
