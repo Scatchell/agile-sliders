@@ -16,6 +16,7 @@
 
 (defn get-session [request]
   (let [session-id (get-in request [:path-params :session-id])]
+    ;todo step should be calculated based on how many items are added? i.e. 10 items step of 10, 20 items step of 5, etc.
     (layout/render request "sliders.html" (sliders-data (db/get-session session-id)))))
 
 (defn about-page [request]
@@ -34,6 +35,8 @@
    [:sliders
     st/required
     st/coll
+    {:message  "Must have no more than 30 sliders for a session."
+     :validate #(<= (count %) 30)}
     {:message  "Must have at least 2 sliders for a session."
      :validate #(> (count %) 1)}
     {:message  "Each slider must have a name."
@@ -59,7 +62,7 @@
     (db/create-session-version
       session-version-data
       session-id)
-    (response/ok {:session-id session-id
+    (response/ok {:session-id   session-id
                   :version-name (:version-name session-version-data)})))
 
 (defn forward-to-create-session-page [request]
@@ -72,6 +75,11 @@
                                             (sliders-data-version
                                               (db/get-session session-id) version-name)))))
 
+(defn aggregate-all-slider-versions [request]
+  (let [session-id (get-in request [:path-params :session-id])]
+    (layout/render request "sliders.html"
+                   (sliders-data-with-all-versions (db/get-session session-id)))))
+
 (defn home-routes []
   [""
    {:middleware [middleware/wrap-formats]}
@@ -80,7 +88,8 @@
    ["/create" {:get create-session-page}]
    ["/session/:session-id" {:get get-session}]
    ["/session/:session-id/version" {:post save-new-session-version!}]
+   ["/session/:session-id/aggregate" {:get aggregate-all-slider-versions}]
    ["/session/:session-id/version/:version-name" {:post save-new-session-version!
-                                                  :get get-session-version}]
+                                                  :get  get-session-version}]
    ["/session" {:post save-session-data!}]
    ["/about" {:get about-page}]])

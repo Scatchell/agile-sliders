@@ -11,10 +11,23 @@
             <div class="column">
                 <input id="slider-{{ slider.name }}" class="slider has-output is-fullwidth is-large" min="0" max="100"
                        value="{{ slider.initial-pos }}" step="{{ slider.step }}" type="range">
-                <output id="current-position" for="slider-{{ slider.name }}">{{ slider.initial-pos }}</output>
+                <output class="current-position" for="slider-{{ slider.name }}">{{ slider.initial-pos }}</output>
                 <div class="suggested-position"></div>
             </div>
         </div>
+        {% for slider-version in slider.versions %}
+        <div class="columns slider-col is-vcentered">
+            <div class="column is-one-fifth">
+            </div>
+            <div class="column">
+<!--                todo make readonly-->
+                <input id="slider-{{ slider-version.name }}" class="slider slider-version has-output is-fullwidth is-large" min="0" max="100"
+                       value="{{ slider-version.initial-pos }}" step="{{ slider.step }}" type="range">
+                <output class="current-position" for="slider-{{ slider-version.name }}">{{ slider-version.initial-pos }}</output>
+                <div class="suggested-position"></div>
+            </div>
+        </div>
+        {% endfor %}
         {% endfor %}
         {% if not example-page %}
         <div class="columns">

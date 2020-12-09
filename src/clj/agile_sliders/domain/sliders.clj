@@ -1,6 +1,7 @@
 (ns agile-sliders.domain.sliders
   (:require [clojure.set :as set]))
 
+
 (defn sliders-data [session-data]
   (let [new-session-data
         (->> session-data
@@ -16,6 +17,26 @@
                            (= (:name version-slider) slider-name))
                          sliders)))
   )
+
+(defn- matching-version-sliders [slider versions]
+  (merge slider
+         {:versions (map (fn [slider-version]
+                           {:name (:version-name slider-version)
+                            :initial-pos (:current_pos (first (filter #(= (:name %) (:name slider))
+                                                                      (:sliders slider-version)))
+                                           )}) versions)})
+  )
+
+(defn sliders-data-with-all-versions [session-data]
+  (let [sliders-data (sliders-data session-data)
+        slider-positions
+        (->> sliders-data
+             :sliders
+             (map (fn [slider] (matching-version-sliders slider (:versions session-data))))
+             ;todo aggregate initial-pos of 'main' slider
+             )
+        ]
+    (dissoc (assoc sliders-data :sliders slider-positions) :versions)))
 
 (defn sliders-data-version [session-data version-name]
   (let [selected-version-sliders (:sliders (->> session-data
