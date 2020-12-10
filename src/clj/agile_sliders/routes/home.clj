@@ -89,7 +89,6 @@
    ["/session/:session-id" {:get get-session}]
    ["/session/:session-id/version" {:post save-new-session-version!}]
    ["/session/:session-id/aggregate" {:get aggregate-all-slider-versions}]
-   ["/session/:session-id/version/:version-name" {:post save-new-session-version!
-                                                  :get  get-session-version}]
+   ["/session/:session-id/version/:version-name" {:get  get-session-version}]
    ["/session" {:post save-session-data!}]
    ["/about" {:get about-page}]])

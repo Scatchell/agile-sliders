@@ -1,6 +1,6 @@
 class Sliders {
     constructor() {
-        this.$sliders = $('input.slider');
+        this.$sliders = $('input.slider').not('.slider-version');
         this.initialSliderAmount = this.totalSliderAmount();
     }
 

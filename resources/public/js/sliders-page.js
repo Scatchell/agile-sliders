@@ -20,9 +20,7 @@ $(document).ready(function () {
 
     $("#save-session").click(function (e) {
         let postUrl =
-            (window.location.pathname.includes("/version")
-                ? window.location.pathname
-                : window.location.pathname + "/version");
+            window.location.pathname.match(/\/session\/.*?\//)[0] + "version";
         console.log(postUrl);
         $.post({
             url: postUrl,

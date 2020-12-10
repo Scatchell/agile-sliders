@@ -44,7 +44,16 @@
          (#(assoc % :version-name version-name)))))
 
 (defn sliders-average-for [sliders]
-  (/ (reduce (fn [total slider] (+ total (:initial-pos slider))) 0 sliders) (count sliders)))
+  (let [average (/ (reduce (fn [total slider] (+ total (:initial-pos slider))) 0 sliders) (count sliders))]
+    (Math/round (double average))))
+
+(defn- items-present-in-all-cols [cols]
+  (->> cols
+       flatten
+       frequencies
+       (filter #(= (val %) (count cols)))
+       keys)
+  )
 
 (defn best-step-for [numbers]
   (let [steps (map (fn [num]
@@ -53,10 +62,7 @@
                    numbers)]
 
     (->> steps
-         flatten
-         frequencies
-         (filter #(= (val %) (count steps)))
-         keys
+         items-present-in-all-cols
          (apply max)))
   )
 
@@ -70,8 +76,7 @@
 
         best-step (->> slider-positions
                        (map :initial-pos)
-                       best-step-for
-                       )]
+                       best-step-for)]
 
     (->> slider-positions
          (map #(assoc % :step best-step))
