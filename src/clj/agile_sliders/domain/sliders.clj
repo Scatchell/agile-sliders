@@ -18,25 +18,14 @@
                          sliders)))
   )
 
-(defn- matching-version-sliders [slider versions]
+(defn- matching-slider-versions-for [slider versions]
   (merge slider
          {:versions (map (fn [slider-version]
-                           {:name (:version-name slider-version)
+                           {:name        (:version-name slider-version)
                             :initial-pos (:current_pos (first (filter #(= (:name %) (:name slider))
                                                                       (:sliders slider-version)))
                                            )}) versions)})
   )
-
-(defn sliders-data-with-all-versions [session-data]
-  (let [sliders-data (sliders-data session-data)
-        slider-positions
-        (->> sliders-data
-             :sliders
-             (map (fn [slider] (matching-version-sliders slider (:versions session-data))))
-             ;todo aggregate initial-pos of 'main' slider
-             )
-        ]
-    (dissoc (assoc sliders-data :sliders slider-positions) :versions)))
 
 (defn sliders-data-version [session-data version-name]
   (let [selected-version-sliders (:sliders (->> session-data
@@ -53,6 +42,42 @@
                                         selected-version-sliders))))
          (assoc session-data-without-versions :sliders)
          (#(assoc % :version-name version-name)))))
+
+(defn sliders-average-for [sliders]
+  (/ (reduce (fn [total slider] (+ total (:initial-pos slider))) 0 sliders) (count sliders)))
+
+(defn best-step-for [numbers]
+  (let [steps (map (fn [num]
+                     (filter #(= 0 (mod num %))
+                             (range 1 (+ 1 num))))
+                   numbers)]
+
+    (->> steps
+         flatten
+         frequencies
+         (filter #(= (val %) (count steps)))
+         keys
+         (apply max)))
+  )
+
+(defn sliders-data-with-all-versions [session-data]
+  (let [sliders-data (sliders-data session-data)
+        slider-positions
+        (->> sliders-data
+             :sliders
+             (map (fn [slider] (matching-slider-versions-for slider (:versions session-data))))
+             (map (fn [slider] (assoc slider :initial-pos (sliders-average-for (:versions slider))))))
+
+        best-step (->> slider-positions
+                       (map :initial-pos)
+                       best-step-for
+                       )]
+
+    (->> slider-positions
+         (map #(assoc % :step best-step))
+         (assoc sliders-data :sliders)
+         (#(dissoc % :versions)))
+    ))
 
 (defn sliders-mock-data []
   {:name    "Example of a sliders prioritization session"

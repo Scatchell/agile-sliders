@@ -77,7 +77,7 @@
 
 (defn aggregate-all-slider-versions [request]
   (let [session-id (get-in request [:path-params :session-id])]
-    (layout/render request "sliders.html"
+    (layout/render request "sliders-aggregate.html"
                    (sliders-data-with-all-versions (db/get-session session-id)))))
 
 (defn home-routes []

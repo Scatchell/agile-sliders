@@ -47,19 +47,19 @@
            (sliders-data-version sliders-data-with-versions "Bob Jones"))))
   )
 
-(deftest sliders-data-with-versions-test
+(deftest sliders-data-with-all-versions-test
   (is (= {:name    "session 1"
           :sliders [{:name        "slider 1"
-                     :step        1
-                     :initial-pos 50
+                     :step        5
+                     :initial-pos 45
                      :versions    [{:name        "James John"
                                     :initial-pos 70}
                                    {:name        "Bob Jones"
                                     :initial-pos 20}]
                      }
                     {:name        "slider 2"
-                     :step        1
-                     :initial-pos 50
+                     :step        5
+                     :initial-pos 55
                      :versions    [{:name        "James John"
                                     :initial-pos 30}
                                    {:name        "Bob Jones"
@@ -78,3 +78,16 @@
                                                                        {:name "slider 2" :current_pos 80}]}
                                                        ]})))
   )
+
+(deftest sliders-average-for-test
+  (is (= 45
+         (sliders-average-for [{:initial-pos 70}
+                               {:initial-pos 20}])))
+  )
+
+
+(deftest best-step-for-test
+  (is (= 5 (best-step-for [25 20 50])))
+  (is (= 5 (best-step-for [45 55 5])))
+  )
+
