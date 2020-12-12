@@ -88,6 +88,7 @@
 (deftest best-step-for-test
   (is (= 5 (best-step-for [25 20 50])))
   (is (= 5 (best-step-for [45 55 5])))
+  (is (= 10 (best-step-for [0 10])))
   )
 
 

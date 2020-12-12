@@ -25,10 +25,11 @@
 
 (defn best-step-for [numbers]
   (let [
-        steps (map (fn [num]
-                     (filter #(= 0 (mod num %))
-                             (range 1 (+ 1 num))))
-                   numbers)
+        steps (->> numbers
+                   (filter #(not (= 0 %)))
+                   (map (fn [num]
+                          (filter #(= 0 (mod num %))
+                                  (range 1 (+ 1 num))))))
         ]
 
     (->> steps
@@ -104,11 +105,11 @@
 
 (defn sliders-mock-data []
   {:name    "Example of a sliders prioritization session"
-   :sliders [{:name        "Budget"
+   :sliders [{:name "Budget"
               }
-             {:name        "Scope"
+             {:name "Scope"
               }
-             {:name        "Quality"
+             {:name "Quality"
               }
-             {:name        "Resiliency"
+             {:name "Resiliency"
               }]})
