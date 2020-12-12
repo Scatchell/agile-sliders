@@ -1,15 +1,51 @@
 (ns agile-sliders.domain.sliders
   (:require [clojure.set :as set]))
 
+(def default-step 10)
+
+(defn- round [num]
+  (Math/round (double num))
+  )
+
+(defn max-slider-val-for [sliders]
+  (* default-step (- (count sliders) 1))
+  )
+
+(defn- items-present-in-all-cols [cols]
+  (->> cols
+       flatten
+       frequencies
+       (filter #(= (val %) (count cols)))
+       keys)
+  )
+
+(defn middle-slider-values-for [sliders]
+  (/ (max-slider-val-for sliders) 2)
+  )
+
+(defn best-step-for [numbers]
+  (let [steps (map (fn [num]
+                     (filter #(= 0 (mod num %))
+                             (range 1 (+ 1 num))))
+                   numbers)]
+
+    (->> steps
+         items-present-in-all-cols
+         (apply max)))
+  )
 
 (defn sliders-data [session-data]
-  (let [new-session-data
+  (let [middle-slider-value (middle-slider-values-for (:sliders session-data))
+        formatted-session-data
         (->> session-data
              :sliders
-             (map #(set/rename-keys % {:initial_pos :initial-pos}))
+             (map #(assoc % :initial-pos middle-slider-value))
+             (map #(assoc % :step default-step))
              (assoc session-data :sliders))]
 
-    (dissoc new-session-data :session-id)))
+    (-> formatted-session-data
+        (dissoc :session-id)
+        (assoc :max-slider-val (max-slider-val-for (:sliders session-data))))))
 
 (defn- matching-slider-position [slider-name sliders]
   (:current_pos (first (filter
@@ -36,7 +72,7 @@
 
     (->> (:sliders session-data)
          (map (fn [session-slider]
-                (assoc session-slider :initial_pos
+                (assoc session-slider :initial-pos
                                       (matching-slider-position
                                         (:name session-slider)
                                         selected-version-sliders))))
@@ -45,31 +81,11 @@
 
 (defn sliders-average-for [sliders]
   (let [average (/ (reduce (fn [total slider] (+ total (:initial-pos slider))) 0 sliders) (count sliders))]
-    (Math/round (double average))))
-
-(defn- items-present-in-all-cols [cols]
-  (->> cols
-       flatten
-       frequencies
-       (filter #(= (val %) (count cols)))
-       keys)
-  )
-
-(defn best-step-for [numbers]
-  (let [steps (map (fn [num]
-                     (filter #(= 0 (mod num %))
-                             (range 1 (+ 1 num))))
-                   numbers)]
-
-    (->> steps
-         items-present-in-all-cols
-         (apply max)))
-  )
+    (round average)))
 
 (defn sliders-data-with-all-versions [session-data]
-  (let [sliders-data (sliders-data session-data)
-        slider-positions
-        (->> sliders-data
+  (let [slider-positions
+        (->> session-data
              :sliders
              (map (fn [slider] (matching-slider-versions-for slider (:versions session-data))))
              (map (fn [slider] (assoc slider :initial-pos (sliders-average-for (:versions slider))))))
@@ -80,25 +96,17 @@
 
     (->> slider-positions
          (map #(assoc % :step best-step))
-         (assoc sliders-data :sliders)
+         (assoc session-data :sliders)
          (#(dissoc % :versions)))
     ))
 
 (defn sliders-mock-data []
   {:name    "Example of a sliders prioritization session"
    :sliders [{:name        "Budget"
-              :step        10
-              :initial-pos 50
               }
              {:name        "Scope"
-              :step        10
-              :initial-pos 50
               }
              {:name        "Quality"
-              :step        10
-              :initial-pos 50
               }
              {:name        "Resiliency"
-              :step        10
-              :initial-pos 50
               }]})

@@ -1,7 +1,12 @@
 class Sliders {
     constructor() {
         this.$sliders = $('input.slider').not('.slider-version');
-        this.initialSliderAmount = this.totalSliderAmount();
+
+        this.initialSliderAmount = this.$sliders.map(function (val, i) {
+            return $(this).attr('value');
+        }).get().reduce(function (total, val) {
+            return total + parseInt(val);
+        }, 0);
     }
 
     totalSliderAmount() {
@@ -24,7 +29,7 @@ class Sliders {
     }
 
     resetSliderSuggestions() {
-        this.$sliders.each(function (){
+        this.$sliders.each(function () {
             new Slider($(this)).clearSuggestedValue();
         });
     }

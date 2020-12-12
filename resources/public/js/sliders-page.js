@@ -20,7 +20,7 @@ $(document).ready(function () {
 
     $("#save-session").click(function (e) {
         let postUrl =
-            window.location.pathname.match(/\/session\/.*?\//)[0] + "version";
+            window.location.pathname.match(/\/session\/[a-zA-Z0-9]+/)[0] + "/version"
         $.post({
             url: postUrl,
             data: JSON.stringify(prepareSliderVersionData()),

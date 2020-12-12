@@ -5,18 +5,18 @@ describe('Sliders', () => {
         setFixtures(
             "<div id=\"fixture\">\n" +
             "   <div class=\"column\">" +
-            "       <input id=\"slider-1\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"100\"\n" +
-            "              value=\"50\" step=\"1\" type=\"range\">\n" +
+            "       <input id=\"slider-1\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"20\"\n" +
+            "              value=\"10\" step=\"10\" type=\"range\">\n" +
             "       <div class=\"suggested-position\"></div>\n" +
             "   </div>" +
             "   <div class=\"column\">" +
-            "       <input id=\"slider-2\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"100\"\n" +
-            "              value=\"50\" step=\"1\" type=\"range\">\n" +
+            "       <input id=\"slider-2\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"20\"\n" +
+            "              value=\"10\" step=\"10\" type=\"range\">\n" +
             "       <div class=\"suggested-position\"></div>\n" +
             "   </div>" +
             "   <div class=\"column\">" +
-            "       <input id=\"slider-3\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"100\"\n" +
-            "              value=\"50\" step=\"1\" type=\"range\">\n" +
+            "       <input id=\"slider-3\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"20\"\n" +
+            "              value=\"10\" step=\"10\" type=\"range\">\n" +
             "       <div class=\"suggested-position\"></div>\n" +
             "   </div>" +
             "</div>\n")
@@ -24,12 +24,12 @@ describe('Sliders', () => {
         new Sliders().attach();
     });
 
-    describe(' - slider highlighting - highlight ', () => {
+    describe(' - slider highlighting - highlight', () => {
         it('other sliders when one is changed', () => {
             let $slider1 = $('#slider-1');
             let $slider2 = $('#slider-2');
 
-            $slider1.val("40");
+            $slider1.val("20");
             $slider1.trigger('change');
 
             expect($slider1).not.toHaveClass('is-danger');
@@ -41,9 +41,9 @@ describe('Sliders', () => {
             let $slider2 = $('#slider-2');
             let $slider3 = $('#slider-3');
 
-            $slider1.val("40");
+            $slider1.val("20");
             $slider1.trigger('change');
-            $slider2.val("40");
+            $slider2.val("20");
             $slider2.trigger('change');
 
             expect($slider1).not.toHaveClass('is-danger');
@@ -56,11 +56,11 @@ describe('Sliders', () => {
             let $slider2 = $('#slider-2');
             let $slider3 = $('#slider-3');
 
-            $slider1.val("40");
+            $slider1.val("0");
             $slider1.trigger('change');
-            $slider2.val("60");
+            $slider2.val("20");
             $slider2.trigger('change');
-            $slider2.val("50");
+            $slider2.val("10");
             $slider2.trigger('change');
 
             expect($slider2).not.toHaveClass('is-danger');
@@ -73,9 +73,9 @@ describe('Sliders', () => {
             let $slider2 = $('#slider-2');
             let $slider3 = $('#slider-3');
 
-            $slider1.val("40");
+            $slider1.val("20");
             $slider1.trigger('change');
-            $slider2.val("60");
+            $slider2.val("0");
             $slider2.trigger('change');
 
             expect($slider1).not.toHaveClass('is-danger');
@@ -108,7 +108,7 @@ describe('Sliders', () => {
             let $slider2 = $('#slider-2');
             let $slider3 = $('#slider-3');
 
-            $slider1.val("40");
+            $slider1.val("0");
             $slider1.trigger('change');
 
             let $slider1SuggestedPos = $slider1.parent().find('.suggested-position');
@@ -140,10 +140,10 @@ describe('Sliders', () => {
             let $slider2 = $('#slider-2');
             let $slider3 = $('#slider-3');
 
-            $slider1.val("60");
+            $slider1.val("20");
             $slider1.trigger('change');
 
-            $slider1.val("50");
+            $slider1.val("10");
             $slider1.trigger('change');
 
             let $slider1SuggestedPos = $slider1.parent().find('.suggested-position');

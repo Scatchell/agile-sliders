@@ -1,8 +1,6 @@
 const toItems = (arr1) => arr1.reduce((sliderList, sliderName) => {
     sliderList.push({
-        name: sliderName,
-        step: 10,
-        initial_pos: 50
+        name: sliderName
     })
     return sliderList;
 }, []);

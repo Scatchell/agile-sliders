@@ -12,7 +12,7 @@
                 <label for="slider-{{ slider.name }}">{{ slider.name }}</label>
             </div>
             <div class="column">
-                <input id="slider-{{ slider.name }}" class="slider has-output is-fullwidth is-large" min="0" max="100"
+                <input id="slider-{{ slider.name }}" class="slider has-output is-fullwidth is-large" min="0" max="{{ max-slider-val }}"
                        value="{{ slider.initial-pos }}" step="{{ slider.step }}" type="range">
                 <output class="current-position" for="slider-{{ slider.name }}">{{ slider.initial-pos }}</output>
                 <div class="suggested-position"></div>

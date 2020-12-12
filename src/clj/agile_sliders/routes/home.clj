@@ -12,12 +12,14 @@
     [clojure.set :as set]))
 
 (defn example-page [request]
-  (layout/render request "sliders.html" (assoc (sliders-mock-data) :example-page true)))
+  (layout/render request "sliders.html" (assoc (sliders-data (sliders-mock-data)) :example-page true)))
 
 (defn get-session [request]
-  (let [session-id (get-in request [:path-params :session-id])]
+  (let [session-id (get-in request [:path-params :session-id])
+        value (sliders-data (db/get-session session-id))]
+    (prn value)
     ;todo step should be calculated based on how many items are added? i.e. 10 items step of 10, 20 items step of 5, etc.
-    (layout/render request "sliders.html" (sliders-data (db/get-session session-id)))))
+    (layout/render request "sliders.html" value)))
 
 (defn about-page [request]
   (layout/render request "about.html"))
@@ -71,14 +73,17 @@
 (defn get-session-version [request]
   (let [session-id (get-in request [:path-params :session-id])
         version-name (get-in request [:path-params :version-name])]
-    (layout/render request "sliders.html" (sliders-data
-                                            (sliders-data-version
-                                              (db/get-session session-id) version-name)))))
+    (layout/render request "sliders.html"
+                   (sliders-data-version
+                     (sliders-data
+                       (db/get-session session-id)) version-name))))
 
 (defn aggregate-all-slider-versions [request]
   (let [session-id (get-in request [:path-params :session-id])]
     (layout/render request "sliders-aggregate.html"
-                   (sliders-data-with-all-versions (db/get-session session-id)))))
+                   (sliders-data-with-all-versions
+                     (sliders-data
+                       (db/get-session session-id))))))
 
 (defn home-routes []
   [""
@@ -89,6 +94,6 @@
    ["/session/:session-id" {:get get-session}]
    ["/session/:session-id/version" {:post save-new-session-version!}]
    ["/session/:session-id/aggregate" {:get aggregate-all-slider-versions}]
-   ["/session/:session-id/version/:version-name" {:get  get-session-version}]
+   ["/session/:session-id/version/:version-name" {:get get-session-version}]
    ["/session" {:post save-session-data!}]
    ["/about" {:get about-page}]])
