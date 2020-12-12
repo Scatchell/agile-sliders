@@ -17,7 +17,6 @@
 (defn get-session [request]
   (let [session-id (get-in request [:path-params :session-id])
         value (sliders-data (db/get-session session-id))]
-    (prn value)
     ;todo step should be calculated based on how many items are added? i.e. 10 items step of 10, 20 items step of 5, etc.
     (layout/render request "sliders.html" value)))
 
@@ -81,9 +80,11 @@
 (defn aggregate-all-slider-versions [request]
   (let [session-id (get-in request [:path-params :session-id])]
     (layout/render request "sliders-aggregate.html"
-                   (sliders-data-with-all-versions
-                     (sliders-data
-                       (db/get-session session-id))))))
+                   (assoc
+                     (sliders-data-with-all-versions
+                      (sliders-data
+                        (db/get-session session-id)))
+                     :aggregate true))))
 
 (defn home-routes []
   [""

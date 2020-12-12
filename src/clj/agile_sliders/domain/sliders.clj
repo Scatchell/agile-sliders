@@ -24,10 +24,12 @@
   )
 
 (defn best-step-for [numbers]
-  (let [steps (map (fn [num]
+  (let [
+        steps (map (fn [num]
                      (filter #(= 0 (mod num %))
                              (range 1 (+ 1 num))))
-                   numbers)]
+                   numbers)
+        ]
 
     (->> steps
          items-present-in-all-cols

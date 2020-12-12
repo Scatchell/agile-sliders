@@ -7,17 +7,7 @@
     <section class="section">
         <h2>{{ name }}{% if version-name %} <span class="version-name">[{{version-name}}]</span>{% endif %}</h2>
         {% for slider in sliders %}
-        <div class="columns slider-col is-vcentered">
-            <div class="column is-one-fifth">
-                <label for="slider-{{ slider.name }}">{{ slider.name }}</label>
-            </div>
-            <div class="column">
-                <input id="slider-{{ slider.name }}" class="slider has-output is-fullwidth is-large" min="0" max="{{ max-slider-val }}"
-                       value="{{ slider.initial-pos }}" step="{{ slider.step }}" type="range">
-                <output class="current-position" for="slider-{{ slider.name }}">{{ slider.initial-pos }}</output>
-                <div class="suggested-position"></div>
-            </div>
-        </div>
+        {% include "templates/slider.html" %}
         {% endfor %}
         {% if not example-page %}
         <div class="columns">
