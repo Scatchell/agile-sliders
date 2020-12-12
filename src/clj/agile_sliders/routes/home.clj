@@ -17,7 +17,6 @@
 (defn get-session [request]
   (let [session-id (get-in request [:path-params :session-id])
         value (sliders-data (db/get-session session-id))]
-    ;todo step should be calculated based on how many items are added? i.e. 10 items step of 10, 20 items step of 5, etc.
     (layout/render request "sliders.html" value)))
 
 (defn about-page [request]

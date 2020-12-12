@@ -18,7 +18,8 @@ $(document).ready(function () {
         };
     }
 
-    $("#save-session").click(function (e) {
+
+    let saveSession = function (e) {
         let postUrl =
             window.location.pathname.match(/\/session\/[a-zA-Z0-9]+/)[0] + "/version"
         $.post({
@@ -32,6 +33,13 @@ $(document).ready(function () {
         });
 
         e.preventDefault();
+    };
+
+    $("#version-name").keypress(function (e) {
+        if(e.which === 13) {
+            saveSession(e);
+        }
     });
 
+    $("#save-session").click(saveSession);
 });
