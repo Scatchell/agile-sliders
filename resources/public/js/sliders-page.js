@@ -42,4 +42,10 @@ $(document).ready(function () {
     });
 
     $("#save-session").click(saveSession);
+
+    $("#show-aggregate").click(function (){
+        let redirectUrl =
+            window.location.pathname.match(/\/session\/[a-zA-Z0-9]+/)[0] + "/aggregate"
+        window.location.href = redirectUrl;
+    });
 });
