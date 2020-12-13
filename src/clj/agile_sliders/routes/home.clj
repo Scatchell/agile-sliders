@@ -81,9 +81,10 @@
         version-name (get-in request [:path-params :version-name])]
     (layout/render request "sliders.html"
                    (merge
-                     (sliders-data-version
-                       (sliders-data
-                         (db/get-session session-id)) version-name)
+                     (order-sliders-data
+                       (sliders-data-version
+                         (sliders-data
+                           (db/get-session session-id)) version-name))
                      extra-session-data)))
   )
 
@@ -99,9 +100,10 @@
   (let [session-id (get-in request [:path-params :session-id])]
     (layout/render request "sliders-aggregate.html"
                    (assoc
-                     (sliders-data-with-all-versions
-                       (sliders-data
-                         (db/get-session session-id)))
+                     (order-sliders-data
+                       (sliders-data-with-all-versions
+                         (sliders-data
+                           (db/get-session session-id))))
                      :aggregate true))))
 
 (defn home-routes []

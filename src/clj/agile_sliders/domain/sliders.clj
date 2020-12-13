@@ -106,6 +106,12 @@
          (#(dissoc % :versions)))
     ))
 
+(defn order-sliders-data [sliders-data]
+  (->> (:sliders sliders-data)
+       (sort-by :initial-pos)
+       reverse
+       (assoc sliders-data :sliders)))
+
 (defn sliders-mock-data []
   {:name    "Example of a sliders prioritization session"
    :sliders [{:name "Budget"
