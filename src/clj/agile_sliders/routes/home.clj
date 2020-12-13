@@ -20,7 +20,8 @@
     (layout/render request "sliders.html" value)))
 
 (defn about-page [request]
-  (layout/render request "about.html"))
+  (layout/render request "about.html"
+                 {:about-content (-> "docs/about.md" io/resource slurp)}))
 
 (defn create-session-page [request]
   (layout/render request "create-session.html"))
@@ -81,8 +82,8 @@
     (layout/render request "sliders.html"
                    (merge
                      (sliders-data-version
-                      (sliders-data
-                        (db/get-session session-id)) version-name)
+                       (sliders-data
+                         (db/get-session session-id)) version-name)
                      extra-session-data)))
   )
 
@@ -99,8 +100,8 @@
     (layout/render request "sliders-aggregate.html"
                    (assoc
                      (sliders-data-with-all-versions
-                      (sliders-data
-                        (db/get-session session-id)))
+                       (sliders-data
+                         (db/get-session session-id)))
                      :aggregate true))))
 
 (defn home-routes []
