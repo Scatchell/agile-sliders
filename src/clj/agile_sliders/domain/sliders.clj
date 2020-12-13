@@ -59,11 +59,11 @@
 
 (defn- matching-slider-versions-for [slider versions]
   (merge slider
-         {:versions (map (fn [slider-version]
-                           {:name        (:version-name slider-version)
-                            :initial-pos (:current_pos (first (filter #(= (:name %) (:name slider))
-                                                                      (:sliders slider-version)))
-                                           )}) versions)})
+         {:versions (->> versions
+                         (map (fn [slider-version]
+                                {:name        (:version-name slider-version)
+                                 :initial-pos (:current_pos (first (filter #(= (:name %) (:name slider))
+                                                                           (:sliders slider-version))))})))})
   )
 
 (defn sliders-data-version [session-data version-name]
@@ -87,10 +87,13 @@
     (round average)))
 
 (defn sliders-data-with-all-versions [session-data]
-  (let [slider-positions
-        (->> session-data
+  (let [session-data-with-relevant-versions
+        (assoc session-data :versions
+                            (remove :output-version (:versions session-data)))
+        slider-positions
+        (->> session-data-with-relevant-versions
              :sliders
-             (map (fn [slider] (matching-slider-versions-for slider (:versions session-data))))
+             (map (fn [slider] (matching-slider-versions-for slider (:versions session-data-with-relevant-versions))))
              (map (fn [slider] (assoc slider :initial-pos (sliders-average-for (:versions slider))))))
 
         best-step (->> slider-positions
@@ -99,7 +102,7 @@
 
     (->> slider-positions
          (map #(assoc % :step best-step))
-         (assoc session-data :sliders)
+         (assoc session-data-with-relevant-versions :sliders)
          (#(dissoc % :versions)))
     ))
 

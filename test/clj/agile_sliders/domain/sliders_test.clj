@@ -76,6 +76,10 @@
                                                      {:version-name "Bob Jones"
                                                       :sliders      [{:name "slider 1" :current_pos 20}
                                                                      {:name "slider 2" :current_pos 80}]}
+                                                     {:version-name "Session Output"
+                                                      :output-version true
+                                                      :sliders      [{:name "slider 1" :current_pos 10}
+                                                                     {:name "slider 2" :current_pos 90}]}
                                                      ]})))
   )
 

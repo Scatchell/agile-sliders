@@ -54,6 +54,7 @@
         (db/create-session (merge session-data {:session-id session-id}))
         (response/ok {:session-id session-id})))))
 
+
 (defn save-new-session-version! [request]
   (let [session-version-data (set/rename-keys
                                (get-in request [:body-params])
@@ -61,6 +62,17 @@
         session-id (get-in request [:path-params :session-id])]
     (db/create-session-version
       session-version-data
+      session-id)
+    (response/ok {:session-id   session-id
+                  :version-name (:version-name session-version-data)})))
+
+(defn save-new-output-session-version! [request]
+  (let [session-version-data (set/rename-keys
+                               (get-in request [:body-params])
+                               {:version_name :version-name})
+        session-id (get-in request [:path-params :session-id])]
+    (db/create-session-version
+      (assoc session-version-data :output-version true)
       session-id)
     (response/ok {:session-id   session-id
                   :version-name (:version-name session-version-data)})))
@@ -93,6 +105,7 @@
    ["/create" {:get create-session-page}]
    ["/session/:session-id" {:get get-session}]
    ["/session/:session-id/version" {:post save-new-session-version!}]
+   ["/session/:session-id/output" {:post save-new-output-session-version!}]
    ["/session/:session-id/aggregate" {:get aggregate-all-slider-versions}]
    ["/session/:session-id/version/:version-name" {:get get-session-version}]
    ["/session" {:post save-session-data!}]
