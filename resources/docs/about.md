@@ -1,10 +1,10 @@
 # About "Agile Sliders"
 
-This is an application built to solve the problem of running "sliders" sessions to determine priorities. If you are unsure what these sessions are, please explore them as they can be very useful to your project. A synopsis is [also included below](#what-is-sliders-session).
+This application solves the problem of running "sliders" sessions to determine priorities. If you are unsure what these sessions are, please explore them as they can be very useful to your project. A synopsis of how these sessions are run is [also included below](#what-is-sliders-session).
 
  ### How this application helps
  
- With this application, you can create a custom sliders session to share with your colleagues with just a few clicks, including as many or as few priorities as you want in the session.
+ You can create a custom sliders session to share with your colleagues with just a few clicks, including as many or as few priorities as you want in the session.
  
  They can then all load the link you send them and put in their opinions about the priority using a nice user interface which allows them to easily move some things up in priority, and know which other sliders they must then move down to reach equal priority. 
  
