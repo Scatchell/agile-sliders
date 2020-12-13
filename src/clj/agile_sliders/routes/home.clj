@@ -75,13 +75,24 @@
 (defn forward-to-create-session-page [request]
   (response/temporary-redirect "/create"))
 
-(defn get-session-version [request]
+(defn get-session-or-output-version [request extra-session-data]
   (let [session-id (get-in request [:path-params :session-id])
         version-name (get-in request [:path-params :version-name])]
     (layout/render request "sliders.html"
-                   (sliders-data-version
-                     (sliders-data
-                       (db/get-session session-id)) version-name))))
+                   (merge
+                     (sliders-data-version
+                      (sliders-data
+                        (db/get-session session-id)) version-name)
+                     extra-session-data)))
+  )
+
+(defn get-session-version [request]
+  (get-session-or-output-version request {})
+  )
+
+(defn get-session-output-version [request]
+  (get-session-or-output-version request {:output-session true})
+  )
 
 (defn aggregate-all-slider-versions [request]
   (let [session-id (get-in request [:path-params :session-id])]
@@ -102,7 +113,7 @@
    ["/session/:session-id/version" {:post new-session-version!}]
    ["/session/:session-id/output" {:post new-output-session-version!}]
    ["/session/:session-id/aggregate" {:get aggregate-all-slider-versions}]
-   ["/session/:session-id/output/:output-version-name" {:get get-session-version}]
+   ["/session/:session-id/output/:version-name" {:get get-session-output-version}]
    ["/session/:session-id/version/:version-name" {:get get-session-version}]
    ["/session" {:post save-session-data!}]
    ["/about" {:get about-page}]])

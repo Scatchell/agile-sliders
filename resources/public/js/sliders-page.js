@@ -30,7 +30,7 @@ $(document).ready(function () {
                 data: JSON.stringify(prepareSliderVersionData()),
                 contentType: 'application/json; charset=utf-8'
             }).done(function (data) {
-                window.location.href = "/session/" + data['session-id'] + "/version/" + data['version-name'];
+                window.location.href = "/session/" + data['session-id'] + "/" + type + "/" + data['version-name'];
             }).fail(function (data) {
                 //todo failed...
             });
