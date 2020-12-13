@@ -24,7 +24,7 @@ $(document).ready(function () {
             let type = outputVersion ? "output" : "version";
 
             let postUrl =
-                window.location.pathname.match(/\/session\/[a-zA-Z0-9]+/)[0] + "/" + type;
+                sessionIdPath(window.location.pathname) + "/" + type;
             $.post({
                 url: postUrl,
                 data: JSON.stringify(prepareSliderVersionData()),
@@ -41,23 +41,18 @@ $(document).ready(function () {
 
     $("#version-name").keypress(function (e) {
         if (e.which === 13) {
-            saveSession(false)(e);
+            let outputVersion = $(this).hasClass('output-version');
+            saveSession(outputVersion)(e);
         }
     });
 
     $("#save-session").click(saveSession(false));
 
-    $("#output-version-name").keypress(function (e) {
-        if (e.which === 13) {
-            saveSession(true)(e);
-        }
-    });
-
     $("#save-output-session").click(saveSession(true));
 
     $("#show-aggregate").click(function () {
         let redirectUrl =
-            window.location.pathname.match(/\/session\/[a-zA-Z0-9]+/)[0] + "/aggregate"
+            sessionIdPath(window.location.pathname) + "/aggregate"
 
         window.location.href = redirectUrl;
     });
