@@ -86,14 +86,21 @@
   (let [average (/ (reduce (fn [total slider] (+ total (:initial-pos slider))) 0 sliders) (count sliders))]
     (round average)))
 
-(defn sliders-data-with-all-versions [session-data]
-  (let [session-data-with-relevant-versions
-        (assoc session-data :versions
-                            (remove :output-version (:versions session-data)))
+(defn- session-data-with-empty-versions-list [session-data]
+  (-> session-data
+      (assoc :sliders
+             (->> session-data
+                  :sliders
+                  (map #(assoc % :versions []))))
+      (dissoc :versions))
+  )
+
+(defn- session-data-with-versions-list [session-data]
+  (let [relevant-versions (:versions session-data)
         slider-positions
-        (->> session-data-with-relevant-versions
+        (->> session-data
              :sliders
-             (map (fn [slider] (matching-slider-versions-for slider (:versions session-data-with-relevant-versions))))
+             (map (fn [slider] (matching-slider-versions-for slider relevant-versions)))
              (map (fn [slider] (assoc slider :initial-pos (sliders-average-for (:versions slider))))))
 
         best-step (->> slider-positions
@@ -102,9 +109,19 @@
 
     (->> slider-positions
          (map #(assoc % :step best-step))
-         (assoc session-data-with-relevant-versions :sliders)
-         (#(dissoc % :versions)))
-    ))
+         (assoc session-data :sliders)
+         (#(dissoc % :versions))))
+  )
+
+(defn sliders-data-with-all-versions [session-data]
+  (let [session-data-with-relevant-versions
+        (assoc session-data :versions
+                            (remove :output-version (:versions session-data)))
+        relevant-versions (:versions session-data-with-relevant-versions)]
+    (if (not-empty relevant-versions)
+      (session-data-with-versions-list session-data-with-relevant-versions)
+      (session-data-with-empty-versions-list session-data)
+      )))
 
 (defn order-sliders-data [sliders-data]
   (->> (:sliders sliders-data)

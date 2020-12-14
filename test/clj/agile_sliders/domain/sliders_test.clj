@@ -82,6 +82,25 @@
                                                      ]})))
   )
 
+(deftest sliders-data-with-no-versions-test
+  (is (= {:name    "session 1"
+          :sliders [{:name        "slider 1"
+                     :step        1
+                     :initial-pos 50
+                     :versions    []
+                     }
+                    {:name        "slider 2"
+                     :step        1
+                     :initial-pos 50
+                     :versions    []
+                     }]}
+         (sliders-data-with-all-versions {:name     "session 1"
+                                          :sliders  [{:name "slider 1" :initial-pos 50 :step 1}
+                                                     {:name "slider 2" :initial-pos 50 :step 1}
+                                                     ]
+                                          :versions []})))
+  )
+
 (deftest sliders-average-for-test
   (is (= 45
          (sliders-average-for [{:initial-pos 70}
