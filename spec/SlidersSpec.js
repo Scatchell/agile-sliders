@@ -166,11 +166,13 @@ describe('Sliders', () => {
             let $saveOutputSessionButton = $("#save-output-session");
 
             expect($saveSessionButton).toBeDisabled();
+            expect($saveOutputSessionButton).toBeDisabled();
 
             $slider1.val("10");
             $slider1.trigger('change');
 
             expect($saveSessionButton).not.toBeDisabled();
+            expect($saveOutputSessionButton).not.toBeDisabled();
         });
     });
 });

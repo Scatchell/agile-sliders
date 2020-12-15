@@ -36,7 +36,7 @@
   (testing "not-found route"
     (let [response ((app) (request :get "/invalid"))]
       (is (= 404 (:status response)))))
-
+  ;todo test for creating sliders
   #_(testing "should"
     (db/create-session {:session-id "12345"
                         :name       "session 1"

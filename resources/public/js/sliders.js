@@ -61,8 +61,20 @@ class Sliders {
         });
     }
 
+    updateSaveButtonState() {
+        let sliders = this;
+        if (sliders.totalSliderAmount() === sliders.initialSliderAmount) {
+            sliders.$saveButtons.removeAttr('disabled');
+        } else {
+            sliders.$saveButtons.attr('disabled', 'disabled');
+        }
+
+    }
+
     attach() {
         let sliders = this;
+
+        this.updateSaveButtonState();
 
         this.$sliders.each(function () {
             $(this).change(function () {
@@ -74,12 +86,12 @@ class Sliders {
 
                 if (sliders.totalSliderAmount() === sliders.initialSliderAmount) {
                     sliders.resetAllSliders();
-                    sliders.$saveButtons.removeAttr('disabled');
                 } else {
                     sliders.highlightAllUnalteredSliders();
                     sliders.setSuggestedValues();
-                    sliders.$saveButtons.attr('disabled', 'disabled');
                 }
+
+                sliders.updateSaveButtonState();
             });
         });
     }
