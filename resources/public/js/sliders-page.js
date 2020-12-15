@@ -32,7 +32,12 @@ $(document).ready(function () {
             }).done(function (data) {
                 window.location.href = "/session/" + data['session-id'] + "/" + type + "/" + data['version-name'];
             }).fail(function (data) {
-                //todo failed...
+                let $errors = $('#errors');
+                $errors.show();
+                $errors.html("<h3>Errors:</h3><ol></ol>");
+                for (const [key, value] of Object.entries(data.responseJSON.errors)) {
+                    $('#errors ol').append(`<li>${value}</li>`);
+                }
             });
 
             e.preventDefault();

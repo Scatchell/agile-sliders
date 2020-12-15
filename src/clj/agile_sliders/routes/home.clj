@@ -28,19 +28,19 @@
 
 (def session-schema
   [[:name
-    [st/required :message "Each session requires a name."]
+    [st/required :message "Each session requires a name"]
     st/string
-    {:message  "Session name must be less than 100 characters."
+    {:message  "Session name must be less than 100 characters"
      :validate #(< (count %) 100)}]
 
    [:sliders
     st/required
     st/coll
-    {:message  "Must have no more than 30 sliders for a session."
+    {:message  "Must have no more than 30 sliders for a session"
      :validate #(<= (count %) 30)}
-    {:message  "Must have at least 2 sliders for a session."
+    {:message  "Must have at least 2 sliders for a session"
      :validate #(> (count %) 1)}
-    {:message  "Each slider must have a name."
+    {:message  "Each slider must have a name"
      :validate #(every? (fn [slider] (contains? slider :name)) %)}]])
 
 (defn validate-session [params]
@@ -55,17 +55,35 @@
         (db/create-session (merge session-data {:session-id session-id}))
         (response/ok {:session-id session-id})))))
 
+(def version-schema
+  [[:version-name
+    [st/required :message "A name is required"]
+    st/string
+    {:message  "The name must be less than 100 characters"
+     :validate #(< (count %) 100)}]
+
+   [:sliders
+    st/required
+    st/coll
+    {:message  "Must have at least 2 sliders for a session"
+     :validate #(> (count %) 1)}]])
+
+(defn validate-version [params]
+  (first (st/validate params version-schema)))
+
 (defn save-new-session-version [request extra-session-data]
   (let [session-version-data (set/rename-keys
                                (get-in request [:body-params])
                                {:version_name :version-name})
         session-id (get-in request [:path-params :session-id])]
-    (db/create-session-version
-      (merge session-version-data extra-session-data)
-      session-id)
-    (response/ok {:session-id   session-id
-                  :version-name (:version-name session-version-data)}))
-  )
+    (if-let [errors (validate-version session-version-data)]
+      (response/unprocessable-entity (assoc session-version-data :errors errors))
+      (do (db/create-session-version
+            (merge session-version-data extra-session-data)
+            session-id)
+          (response/ok {:session-id   session-id
+                        :version-name (:version-name session-version-data)})))
+    ))
 
 (defn new-session-version! [request]
   (save-new-session-version request {}))

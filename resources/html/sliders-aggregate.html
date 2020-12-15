@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
 <div class="content">
+    {% include "templates/errors.html" %}
     <section class="section">
         <h2>{{ name }}{% if version-name %} <span class="version-name">[{{version-name}}]</span>{% endif %}</h2>
         {% for slider in sliders %}

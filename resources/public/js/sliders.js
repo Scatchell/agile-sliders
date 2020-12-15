@@ -1,6 +1,7 @@
 class Sliders {
     constructor() {
         this.$sliders = $('input.slider').not('.slider-version');
+        this.$saveButtons = $('#save-session,#save-output-session');
 
         this.initialSliderAmount = this.$sliders.map(function (val, i) {
             return $(this).attr('value');
@@ -73,9 +74,11 @@ class Sliders {
 
                 if (sliders.totalSliderAmount() === sliders.initialSliderAmount) {
                     sliders.resetAllSliders();
+                    sliders.$saveButtons.removeAttr('disabled');
                 } else {
                     sliders.highlightAllUnalteredSliders();
                     sliders.setSuggestedValues();
+                    sliders.$saveButtons.attr('disabled', 'disabled');
                 }
             });
         });

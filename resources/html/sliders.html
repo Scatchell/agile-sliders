@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
 <div class="content">
+    {% include "templates/errors.html" %}
     <section class="section">
         <h2>{{ name }}{% if version-name %} <span class="version-name">[{{version-name}}]</span>{% endif %}</h2>
         {% for slider in sliders %}
@@ -27,7 +28,7 @@
             {% if not output-session %}
             <div class="column has-text-centered is-3">
                 <div class="control">
-                    <button class="button is-primary is-rounded" id="save-session" type="submit">Save Session Results
+                    <button class="button is-primary is-rounded" id="save-session" type="submit" disabled="disabled">Save Session Results
                     </button>
                 </div>
             </div>

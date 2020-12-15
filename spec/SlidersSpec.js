@@ -19,6 +19,8 @@ describe('Sliders', () => {
             "              value=\"10\" step=\"10\" type=\"range\">\n" +
             "       <div class=\"suggested-position\"></div>\n" +
             "   </div>" +
+            "   <button class=\"button\" id=\"save-output-session\" type=\"submit\">Save Output Session Results</button>" +
+            "   <button class=\"button\" id=\"save-session\" type=\"submit\">Save Session Results</button>" +
             "</div>\n")
 
         new Sliders().attach();
@@ -152,6 +154,23 @@ describe('Sliders', () => {
             expect($slider1SuggestedPos).not.toContainText('Lower 1');
             expect($slider2SuggestedPos).not.toContainText('Lower 1');
             expect($slider3SuggestedPos).not.toContainText('Lower 1');
+        });
+
+        it('should make save session button clickable when sliders equal', () => {
+            let $slider1 = $('#slider-1');
+
+            $slider1.val("20");
+            $slider1.trigger('change');
+
+            let $saveSessionButton = $("#save-session");
+            let $saveOutputSessionButton = $("#save-output-session");
+
+            expect($saveSessionButton).toBeDisabled();
+
+            $slider1.val("10");
+            $slider1.trigger('change');
+
+            expect($saveSessionButton).not.toBeDisabled();
         });
     });
 });

@@ -4,12 +4,7 @@
 {% endblock %}
 {% block content %}
 <div class="content">
-    <div class="columns">
-        <div class="column is-half is-offset-one-quarter">
-            <div id="errors" class="notification is-danger" style="display: none;">
-            </div>
-        </div>
-    </div>
+    {% include "templates/errors.html" %}
     <div class="columns is-vcentered">
         <div class="column is-half is-offset-one-quarter">
             <h1>Create a new "sliders" session</h1>
