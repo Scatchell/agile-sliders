@@ -42,7 +42,7 @@
         formatted-session-data
         (->> session-data
              :sliders
-             (map #(assoc % :initial-pos middle-slider-value))
+             (map #(assoc % :initial-pos 0))
              (map #(assoc % :step default-step))
              (assoc session-data :sliders))]
 

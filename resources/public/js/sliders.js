@@ -4,10 +4,10 @@ class Sliders {
         this.$saveButtons = $('#save-session,#save-output-session');
 
         this.initialSliderAmount = this.$sliders.map(function (val, i) {
-            return $(this).attr('value');
+            return $(this).attr('max');
         }).get().reduce(function (total, val) {
             return total + parseInt(val);
-        }, 0);
+        }, 0) / 2;
     }
 
     totalSliderAmount() {

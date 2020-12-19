@@ -6,7 +6,7 @@ describe('Sliders', () => {
             "<div id=\"fixture\">\n" +
             "   <div class=\"column\">" +
             "       <input id=\"slider-1\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"20\"\n" +
-            "              value=\"10\" step=\"10\" type=\"range\">\n" +
+            "              value=\"0\" step=\"10\" type=\"range\">\n" +
             "       <div class=\"suggested-position\"></div>\n" +
             "   </div>" +
             "   <div class=\"column\">" +
@@ -16,14 +16,26 @@ describe('Sliders', () => {
             "   </div>" +
             "   <div class=\"column\">" +
             "       <input id=\"slider-3\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"20\"\n" +
-            "              value=\"10\" step=\"10\" type=\"range\">\n" +
+            "              value=\"20\" step=\"10\" type=\"range\">\n" +
             "       <div class=\"suggested-position\"></div>\n" +
             "   </div>" +
             "   <button class=\"button\" id=\"save-output-session\" type=\"submit\">Save Output Session Results</button>" +
             "   <button class=\"button\" id=\"save-session\" type=\"submit\">Save Session Results</button>" +
             "</div>\n")
 
+        let $slider1 = $('#slider-1');
+        let $slider2 = $('#slider-2');
+        let $slider3 = $('#slider-3');
+
         new Sliders($('input.slider')).attach();
+        $slider1.val("10");
+        $slider1.trigger('change');
+
+        $slider2.val("10");
+        $slider2.trigger('change');
+
+        $slider3.val("10");
+        $slider3.trigger('change');
     });
 
     describe(' - slider highlighting - highlight', () => {
@@ -263,7 +275,6 @@ describe('Sliders', () => {
             let $slider3SuggestedPos = $slider3.parent().find('.suggested-position');
             expect($slider3SuggestedPos).not.toContainText('Add');
         });
-    //    todo should NOT highlight slider if it can't be moved in that direction
     });
 
     it('should make save session button clickable when sliders equal', () => {
