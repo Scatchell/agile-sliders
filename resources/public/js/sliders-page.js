@@ -1,6 +1,6 @@
 $(document).ready(function () {
     bulmaSlider.attach();
-    let sliders = new Sliders();
+    let sliders = new Sliders($('input.slider').not('.slider-version'));
     sliders.attach();
 
     function prepareSliderVersionData() {
