@@ -30,18 +30,25 @@ describe('Slider', () => {
         expect($suggestedPosition).toContainText("Lower 1");
     });
 
-    it('should report if it is able to move required distance', () => {
-        let slider1 = new Slider($('#slider-1'));
+    it('should report if it is able to move toward required destination', () => {
+        let $slider1 = $('#slider-1');
+        let slider = new Slider($slider1);
 
-        expect(slider1.canMove(10)).toBeTrue();
-        expect(slider1.canMove(-10)).toBeTrue();
+        $slider1.val("10");
+        $slider1.trigger('change');
+
+        expect(slider.canMoveToward(20)).toBeTrue();
+        expect(slider.canMoveToward(-20)).toBeTrue();
     });
 
-    it('should report if it is able to move required distance', () => {
-        let slider1 = new Slider($('#slider-1'));
+    it('should report if it is NOT able to move toward required destination', () => {
+        let $slider1 = $('#slider-1');
+        let slider = new Slider($slider1);
 
-        expect(slider1.canMove(20)).toBeFalse();
-        expect(slider1.canMove(-20)).toBeFalse();
+        $slider1.val("0");
+        $slider1.trigger('change');
+
+        expect(slider.canMoveToward(-10)).toBeFalse();
     });
 
 });

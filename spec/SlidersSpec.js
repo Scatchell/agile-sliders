@@ -1,6 +1,59 @@
 'use strict';
 
-describe('Sliders', () => {
+describe('Three sliders', () => {
+    beforeEach(() => {
+        setFixtures(
+            "<div id=\"fixture\">\n" +
+            "   <div class=\"column\">" +
+            "       <input id=\"slider-1\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"30\"\n" +
+            "              value=\"0\" step=\"10\" type=\"range\">\n" +
+            "       <div class=\"suggested-position\"></div>\n" +
+            "   </div>" +
+            "   <div class=\"column\">" +
+            "       <input id=\"slider-2\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"30\"\n" +
+            "              value=\"0\" step=\"10\" type=\"range\">\n" +
+            "       <div class=\"suggested-position\"></div>\n" +
+            "   </div>" +
+            "   <div class=\"column\">" +
+            "       <input id=\"slider-3\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"30\"\n" +
+            "              value=\"0\" step=\"10\" type=\"range\">\n" +
+            "       <div class=\"suggested-position\"></div>\n" +
+            "   </div>" +
+            "   <div class=\"column\">" +
+            "       <input id=\"slider-4\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"30\"\n" +
+            "              value=\"0\" step=\"10\" type=\"range\">\n" +
+            "       <div class=\"suggested-position\"></div>\n" +
+            "   </div>" +
+            "   <button class=\"button\" id=\"save-output-session\" type=\"submit\">Save Output Session Results</button>" +
+            "   <button class=\"button\" id=\"save-session\" type=\"submit\">Save Session Results</button>" +
+            "</div>\n")
+
+        new Sliders($('input.slider')).attach();
+    });
+
+    describe('- highlighting -', () => {
+        it('WTF?', () => {
+            let $slider1 = $('#slider-1');
+            let $slider2 = $('#slider-2');
+            let $slider3 = $('#slider-3');
+            let $slider4 = $('#slider-4');
+
+            $slider1.val("20");
+            $slider1.trigger('change');
+
+            $slider2.val("10");
+            $slider2.trigger('change');
+
+            expect($slider1).not.toHaveClass('is-danger');
+            expect($slider2).not.toHaveClass('is-danger');
+            expect($slider3).toHaveClass('is-danger');
+            expect($slider4).toHaveClass('is-danger');
+        });
+
+    });
+
+});
+describe('Three sliders', () => {
     beforeEach(() => {
         setFixtures(
             "<div id=\"fixture\">\n" +
@@ -11,12 +64,12 @@ describe('Sliders', () => {
             "   </div>" +
             "   <div class=\"column\">" +
             "       <input id=\"slider-2\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"20\"\n" +
-            "              value=\"10\" step=\"10\" type=\"range\">\n" +
+            "              value=\"0\" step=\"10\" type=\"range\">\n" +
             "       <div class=\"suggested-position\"></div>\n" +
             "   </div>" +
             "   <div class=\"column\">" +
             "       <input id=\"slider-3\" class=\"slider has-output is-fullwidth is-large\" min=\"0\" max=\"20\"\n" +
-            "              value=\"20\" step=\"10\" type=\"range\">\n" +
+            "              value=\"0\" step=\"10\" type=\"range\">\n" +
             "       <div class=\"suggested-position\"></div>\n" +
             "   </div>" +
             "   <button class=\"button\" id=\"save-output-session\" type=\"submit\">Save Output Session Results</button>" +
@@ -57,6 +110,7 @@ describe('Sliders', () => {
 
             $slider1.val("20");
             $slider1.trigger('change');
+
             $slider2.val("20");
             $slider2.trigger('change');
 
@@ -275,6 +329,7 @@ describe('Sliders', () => {
             let $slider3SuggestedPos = $slider3.parent().find('.suggested-position');
             expect($slider3SuggestedPos).not.toContainText('Add');
         });
+
     });
 
     it('should make save session button clickable when sliders equal', () => {

@@ -42,7 +42,6 @@ class Sliders {
     }
 
     highlightAllUnalteredSliders() {
-        this.unhighlightAllSliders();
         this.$sliders.not('.altered').addClass("is-danger");
     }
 
@@ -74,11 +73,12 @@ class Sliders {
         return this.$sliders.not('.altered').length === 1 && !slider.isAltered();
     }
 
-    thatCanMove(distance) {
+    thatCanMoveToward(distance) {
         let $slidersThatCanMove = this.$sliders.filter(function () {
             let $slider = new Slider($(this));
-            return $slider.canMove(distance);
+            return !$slider.isAltered() && $slider.canMoveToward(distance);
         });
+
         return $slidersThatCanMove.length === 0 ?
             this :
             new Sliders($slidersThatCanMove);
@@ -89,30 +89,31 @@ class Sliders {
 
         this.updateSaveButtonState();
 
+        let recalculateSliderSuggestions = function () {
+            let slider = new Slider($(this));
+
+            if (sliders.totalSliderAmount() === sliders.initialSliderAmount) {
+                sliders.resetAllSliders();
+            } else {
+                if (sliders.onlyUnalteredSlider(slider)) {
+                    sliders.resetAllSliders();
+                }
+
+                slider.markAltered();
+
+                sliders.unhighlightAllSliders();
+                sliders.resetSliderSuggestions();
+
+                let difference = sliders.initialSliderAmount - sliders.totalSliderAmount();
+                let slidersToChange = sliders.thatCanMoveToward(difference);
+                slidersToChange.highlightAllUnalteredSliders();
+                sliders.setSuggestedValuesFor(slidersToChange);
+            }
+
+            sliders.updateSaveButtonState();
+        };
+
         this.$sliders.each(function () {
-                let recalculateSliderSuggestions = function () {
-                    let slider = new Slider($(this));
-
-                    if (sliders.totalSliderAmount() === sliders.initialSliderAmount) {
-                        sliders.resetAllSliders();
-                    } else {
-                        if (sliders.onlyUnalteredSlider(slider)) {
-                            sliders.resetAllSliders();
-                            slider.markAltered();
-                        } else {
-                            slider.clearSuggestedValue();
-                            slider.markAltered();
-                        }
-
-                        let difference = sliders.initialSliderAmount - sliders.totalSliderAmount();
-                        let slidersToChange = sliders.thatCanMove(difference);
-                        slidersToChange.highlightAllUnalteredSliders();
-                        sliders.setSuggestedValuesFor(slidersToChange);
-                    }
-
-                    sliders.updateSaveButtonState();
-                };
-
                 $(this).change(recalculateSliderSuggestions);
             }
         );

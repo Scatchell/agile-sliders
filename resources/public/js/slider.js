@@ -25,13 +25,14 @@ class Slider {
         return this.$slider.hasClass("altered");
     }
 
-    canMove(distance) {
-        let sliderMaxAddMovement = this.sliderMaxValue() - this.currentSliderValue();
-        let sliderMaxLowerMovement = this.currentSliderValue() - 0;
+    canMoveToward(distance) {
+        let currentSliderValue = parseInt(this.currentSliderValue());
 
-        return distance < 0 ?
-            Math.abs(distance) <= sliderMaxLowerMovement :
-            Math.abs(distance) <= sliderMaxAddMovement;
+        if (distance < 0) {
+            return currentSliderValue !== 0;
+        } else {
+            return currentSliderValue !== this.sliderMaxValue()
+        }
     }
 
     suggestSliderValue(suggestedVal) {
