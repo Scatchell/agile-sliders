@@ -4,13 +4,13 @@ This application solves the problem of running "sliders" sessions to determine p
 
  ### How this application helps
  
- You can create a custom sliders session to share with your colleagues with just a few clicks, including as many or as few priorities as you want in the session.
+You can create a custom sliders session to share with your colleagues with just a few clicks, including as many or as few priorities as you want in the session.
  
- They can then all load the link you send them and put in their opinions about the priority using a nice user interface which allows them to easily move some things up in priority, and know which other sliders they must then move down to reach equal priority. 
+Each attendee may load the link you send them and put in their opinions about the priority using a nice interface which allows them to easily move some things up in priority, and know which other sliders they must then move down to reach the correct balance. 
  
- When they are all done, a facilitator can then load a page which includes everyones responses including a total average for each slider. Discussion can happen at this point, and the sliders can be moved and equalized until everyone feels comfortable with the results.
+When they are all done, a facilitator can then load a page which includes everyone's responses including an average of all responses for each slider. Discussion can happen at this point, and the sliders can be moved and equalized until everyone feels comfortable with the results.
  
- When complete, the session can be saved and the output can be used for the duration of the project.
+When complete, the session can be saved and the output can be shared and used for the duration of the project.
  
 <a name="what-is-sliders-session"></a>
 ### What is a sliders prioritization session?
@@ -45,12 +45,14 @@ You may end up with something as follows
 
 These sessions can often be challenging to run for several reasons.
  
-1. First and foremost, there is not a good way to run these sessions remotely. This was the impetus of this project.
+1. There is not a good way to run these sessions remotely (this was the impetus of the agile sliders project.)
  
-2. They revolve around one person, who facilitates the session, moving the sliders. This can often give that person an advantage in having an impact on the session.
+2. They revolve around one person, usually the facilitator, moving the sliders. This can often give that person an unfair advantage in having an impact on the session.
 
 3. There is no good way to allow anonymous interaction in these sessions.
+   
+4. It can sometimes be difficult to determine if the sliders are equal, and how much they can move to make them equal. This wastes time and energy when running the sessions.
  
  -------------------
  
- I hope this application can be useful to projects that are facing the same challenges we were! Feel free to contact the creator/maintainer of this project at: [me@anthony-s.com](mailto:me@anthony-s.com)
+I hope this application can be useful to projects that are facing the same challenges we were and helps to solve the issues above! Feel free to contact the creator/maintainer of this project at: [me@anthony-s.com](mailto:me@anthony-s.com)
